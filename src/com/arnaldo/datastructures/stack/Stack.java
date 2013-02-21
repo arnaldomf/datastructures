@@ -1,4 +1,4 @@
-package com.arnaldo.datastructrures.stack;
+package com.arnaldo.datastructures.stack;
 
 import java.util.Iterator;
 
