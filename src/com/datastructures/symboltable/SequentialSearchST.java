@@ -43,7 +43,7 @@ public class SequentialSearchST<Key, Value> {
 	
 	public int size(){ return this.size; }
 	
-	Iterable<Key> keys() {
+	public Iterable<Key> keys() {
 		Queue<Key> queue = new Queue<Key>();
 		for(Node x = first; x != null; x = x.next)
 			queue.enqueue(x.key);
