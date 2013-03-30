@@ -16,7 +16,32 @@ public class BinarySearchST <Key extends Comparable<Key>, Value> {
 	
 	public int size() { return N; }
 	
+	public int size(Key lo, Key hi) {
+		if(lo.compareTo(hi) > 0) {return 0;}
+		if(contains(hi))
+			return rank(hi) - rank(lo) + 1;
+		return rank(hi) - rank(lo);
+		
+	}
+	
+	public boolean contains(Key k) {
+		return get(k) != null;
+	}
+	
 	public int rank(Key k) { return rankBinarySearch(0, size() - 1, k); }
+	
+	public Key floor(Key k) {
+		int idx = rank(k);
+		if(idx < N && k.compareTo(keys[idx]) == 0) return keys[idx];
+		if(idx == 0) return null;
+		return keys[--idx];
+	}
+	
+	public Key ceiling(Key k) {
+		int idx = rank(k);
+		if(idx == N) return null;
+		else return keys[idx];
+	}
 	
 	public void put(Key k, Value v) {
 		if(size() == 0) { keys[0] = k; values[0] = v; N++; return; }
@@ -74,8 +99,18 @@ public class BinarySearchST <Key extends Comparable<Key>, Value> {
 	public Key min() { return keys[0]; }
 	
 	public Iterable<Key> keys() {
-		Queue<Key> q = new Queue<>();
+		Queue<Key> q = new Queue<Key>();
 		for(Key k : keys) q.enqueue(k);
+		return q;
+	}
+	
+	public Iterable<Key> keys(Key lo, Key hi) {
+		if(lo.compareTo(hi)>0) return null;
+		Queue<Key> q = new Queue<Key>();
+		int s = size(lo, hi);
+		int idx = rank(lo);
+		for(int i = idx; i<s; i++)
+			q.enqueue(keys[i]);
 		return q;
 	}
 	
@@ -111,5 +146,25 @@ public class BinarySearchST <Key extends Comparable<Key>, Value> {
 		
 		System.out.println(st.rank("C"));
 		System.out.println(st.rank("B"));
+		System.out.println(st.rank("Z"));
+		System.out.println(st.contains("A"));
+		System.out.println(st.contains("S"));
+		System.out.println(st.contains("C"));
+		System.out.println(st.contains("E"));
+		
+		System.out.println(st.contains("P"));
+		System.out.println(st.contains("Z"));
+		System.out.println(st.contains("B"));
+		System.out.println(st.size("A", "Z"));
+		for(String k : st.keys("B", "Z"))
+			System.out.println(k);
+		System.out.println("------");
+		System.out.println(st.floor("A"));
+		System.out.println(st.floor("B"));
+		System.out.println(st.floor("C"));
+		System.out.println(st.floor("D"));
+		System.out.println(st.floor("R"));
+		System.out.println(st.floor("S"));
+		System.out.println(st.floor("Z"));
 	}
 }
