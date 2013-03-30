@@ -61,14 +61,15 @@ public class BinarySearchST <Key extends Comparable<Key>, Value> {
 		if(size() <= keys.length/4) resize(keys.length/2);
 	}
 	
+	public void deleteMax() { delete(max()); }
+	public void deleteMin() { delete(min()); }
+	
 	public Key select(int idx) {
 		if(size() == 0 || idx < 0 || idx >= size()) return null;
 		return keys[idx];
 	}
 	
-	public Key max() {
-		return keys[size() - 1];
-	}
+	public Key max() { return keys[size() - 1]; }
 	
 	public Key min() { return keys[0]; }
 	
@@ -80,7 +81,7 @@ public class BinarySearchST <Key extends Comparable<Key>, Value> {
 	
 	private int rankBinarySearch(int lo, int hi, Key k) {
 		if (keys.length == 0) return 0;
-		if(lo >= hi) return lo;
+		if(lo > hi) return lo;
 		int mid = lo + (hi - lo)/2;
 		if (keys[mid].compareTo(k) == 0) return mid;
 		else if (k.compareTo(keys[mid]) < 0) return rankBinarySearch(lo, mid - 1, k);
@@ -102,19 +103,13 @@ public class BinarySearchST <Key extends Comparable<Key>, Value> {
 	public static void main(String[] args) {
 		BinarySearchST<String, Integer> st = new BinarySearchST<>();
 		st.put("S", 10);
-		st.get("S");
-		st.put("E", 99);
-		System.out.println(st.get("S"));
-		System.out.println(st.get("E"));
-		st.put("E", 13);
-		System.out.println(st.get("S"));
-		System.out.println(st.get("E"));
-		System.out.println(st.get("A"));
-		st.put("A", 13);
-		st.put("R", 13);
-		st.delete("S");
-		st.delete("S");
-		st.delete("E");
-		st.delete("A");
+		st.put("E", 1);
+		st.put("A", 20);
+		st.put("R", 15);
+		st.put("C", 21);
+		st.put("H", 3);
+		
+		System.out.println(st.rank("C"));
+		System.out.println(st.rank("B"));
 	}
 }
