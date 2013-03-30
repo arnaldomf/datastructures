@@ -47,14 +47,18 @@ public class BinarySearchST <Key extends Comparable<Key>, Value> {
 		return values[idx];
 	}
 	
-	//TODO terminar
 	public void delete(Key k) {
 		if(size() == 0) return;
 		int idx = rank(k);
 		if(keys[idx].compareTo(k) != 0) return;
-		keys[idx] = null;
-		values[idx] = null;
-		for(int i = N; i > idx; i--){}
+		for(int i = idx; i < N - 1; i++){
+			keys[i] = keys[i+1];
+			values[i] = values[i+1];
+		}
+		keys[N-1] = null;
+		values[N-1] = null;
+		N --;
+		if(size() <= keys.length/4) resize(keys.length/2);
 	}
 	
 	public Key select(int idx) {
@@ -106,5 +110,11 @@ public class BinarySearchST <Key extends Comparable<Key>, Value> {
 		System.out.println(st.get("S"));
 		System.out.println(st.get("E"));
 		System.out.println(st.get("A"));
+		st.put("A", 13);
+		st.put("R", 13);
+		st.delete("S");
+		st.delete("S");
+		st.delete("E");
+		st.delete("A");
 	}
 }
